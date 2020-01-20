@@ -13,10 +13,11 @@ class Player():
 	]
 
 class Game():
-	ennemyhealth=0
-	ennemy=""
 	
-	def init():
+	def __init__(self):
+		self.ennemyhealth=0
+		self.ennemy=""
+	
 		print("Welcome to this little textual RPG")
 		print("Made by Jus de Patate_")
 		
@@ -25,7 +26,7 @@ class Game():
 		
 		print("You have", Player.golds, "golds and your weapon is", Player.inventory[0])
 	
-	def explore():
+	def explore(self):
 		print(Player.name, "finds a new room and explore it...")
 		
 		if Player.isfighting:
@@ -37,10 +38,10 @@ class Game():
 		if rng < 25:
 		# fight room
 			Player.isfighting=True
-			Game.ennemyhealth=25
-			Game.ennemy="Goblin"
+			self.ennemyhealth=25
+			self.ennemy="Goblin"
 			
-			print("Oh no, it's a", Game.ennemy, "! Fight him or die !")
+			print("Oh no, it's a", self.ennemy, "! Fight him or die !")
 		elif rng < 40:
 		# loot room
 			rng=random.randint(1,3)
@@ -55,23 +56,23 @@ class Game():
 				Player.golds+=5
 				loot="5 golds"
 			
-			print(Player.name, "finds a room with a chest, ", Player.name, "opens it and finds", loot)
+			print(Player.name, "finds a room with a chest,", Player.name, "opens it and finds", loot)
 		else:
 		# empty room
 			print("You find an empty room.")
 
-	def fight():
+	def fight(self):
 		if Player.isfighting:
 			rng=random.randint(0, 15)
 			if rng == 0:
-				print(Player.name, "misses", Player.fight)
+				print(Player.name, "misses", self.ennemy)
 			else:
 				print(Player.name, "hits ennemy for", rng, "HP")
-				Game.ennemyhealth=Game.ennemyhealth-rng
+				self.ennemyhealth=self.ennemyhealth-rng
 		else:
 			print("You cannot fight yourself")
 
-	def sheet():
+	def sheet(self):
 		print(Player.name, "killed", Player.kills, "monsters.")
 		print(Player.name, "has", Player.health, "HP.")
 		print("Your bag contains:")
@@ -79,32 +80,32 @@ class Game():
 		for i in Player.inventory:
 			print(i)
 	
-	def checks():
+	def checks(self):
 		if Player.isfighting:
 			rng=random.randint(0,15)
 			if rng == 0:
-				print(Game.ennemy, "misses", Player.name)
+				print(self.ennemy, "misses", Player.name)
 			else:
-				print(Game.ennemy, "hits ", Player.name, " for", rng, "HP")
+				print(self.ennemy, "hits", Player.name, "for", rng, "HP")
 				Player.health=Player.health-rng
 			
-			if Player.health < 0:
+			if Player.health <= 0:
 				print(Player.name, "is dead.")
 				quit()
-			if Game.ennemyhealth < 0:
-				print(Game.ennemy, "is dead.")
+			if self.ennemyhealth <= 0:
+				print(self.ennemy, "is dead.")
 				Player.isfighting=False
-				Game.ennemy=""
+				self.ennemy=""
 				Player.kills+=1
 
 def detect(cmd):
 	if cmd == "explore" or cmd == "e":
-		Game.explore()
+		Game.explore(Game)
 	elif cmd == "fight" or cmd == "f":
-		Game.fight()
+		Game.fight(Game)
 	elif cmd == "sheet" or cmd == "s":
-		Game.sheet()
-	if cmd == "quit" or cmd == "q":
+		Game.sheet(Game)
+	elif cmd == "quit" or cmd == "q":
 		print(Player.name, "killed himself inside the dungeon")
 		Player.isplaying=False
 	
@@ -115,11 +116,11 @@ def detect(cmd):
 		print("s / sheet : See character ("+Player.name+") sheet")
 		print("q / quit : suicide\n")
 
-Game.init()
+Game()
 print("")
 
 while Player.isplaying:
-	Game.checks()
+	Game.checks(Game)
 	
 	print("What do you want to do ? (? for command list)")
 	cmd = input()

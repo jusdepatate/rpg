@@ -1,5 +1,5 @@
-# <code>Python3</code> RPG
+# RPG
 
-I made this very very tiny RPG in less than 3 hours with Pythonista.
+I use this repo to train myself in different languages I know.
 
-Maybe I will upgrade it later but not for now.
+- <code>rpg.py</code> - Made with Pythonista as a Python 3.x train
